@@ -1,5 +1,5 @@
 /**
- * Created by sohobloo on 16/9/13.
+ * Created by lilong on 17/5/20.
  */
 
 'use strict';
@@ -56,7 +56,8 @@ export default class ModalDropdown extends Component {
         defaultValue: 'Please select...',
         options: null,
         animated: true,
-        showsVerticalScrollIndicator: true
+        showsVerticalScrollIndicator: true,
+        canClick:true,
     };
 
     constructor(props) {
@@ -73,7 +74,8 @@ export default class ModalDropdown extends Component {
             loading: props.options == null,
             showDropdown: false,
             buttonText: props.defaultValue,
-            selectedIndex: props.defaultIndex
+            selectedIndex: props.defaultIndex,
+            canClick:props.canClick,
         };
     }
 
@@ -153,7 +155,8 @@ export default class ModalDropdown extends Component {
             <TouchableOpacity ref={button => this._button = button}
                               disabled={this.props.disabled}
                               accessible={this.props.accessible}
-                              onPress={this._onButtonPress.bind(this)}>
+                              onPress={this.state.canClick?this._onButtonPress.bind(this):
+                                  null}>
                 {
                     this.props.children ||
                     (
@@ -334,17 +337,24 @@ export default class ModalDropdown extends Component {
         );
     }
 
+    _setButtonText(text) {
+        console.log(text);
+        this.setState({
+            buttonText: text,
+        });
+    }
+
     _onRowPress(rowData, sectionID, rowID, highlightRow) {
         if (!this.props.onSelect ||
             this.props.onSelect(rowID, rowData) !== false) {
             if (this.props.type === 'target') {
                 highlightRow(sectionID, rowID);
-                this._nextValue = rowData.name;
-                this._nextIndex = rowID;
-                this.setState({
-                    buttonText: rowData.name.toString(),
-                    selectedIndex: rowID
-                });
+                // this._nextValue = rowData.name;
+                // this._nextIndex = rowID;
+                // this.setState({
+                //     buttonText: rowData.name.toString(),
+                //     selectedIndex: rowID
+                // });
             }
             else {
                 highlightRow(sectionID, rowID);
