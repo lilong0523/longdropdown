@@ -1,6 +1,6 @@
 {
   "name": "react-native-longdropdown",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "适用于iOS和安卓的下拉列表",
   "main": "index.js",
   "directories": {
